@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Sacramento&display=swap');
+
+        :root {
+            --primary-color: #ff4d6d;
+            --bg-color: #0b011d; /* Darker New Year theme */
+            --card-bg: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            position: relative;
+            background: linear-gradient(to bottom, #1a0a2e, #0b011d);
+            overflow: hidden;
+        }
+
+        .screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: 0.8s ease-in-out;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .screen.active { opacity: 1; z-index: 10; }
+
+        h1 { font-family: 'Sacramento', cursive; font-size: 3.5rem; color: var(--primary-color); margin: 10px; }
+
+        .btn {
+            background: var(--primary-color);
+            color: white; border: none; padding: 12px 30px;
+            border-radius: 50px; font-size: 1rem; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+            z-index: 100;
+        }
+
+        /* Photo Frame */
+        .photo-frame {
+            width: 260px;
+            height: 320px;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: rotate(-2deg);
+            margin-bottom: 20px;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Heart Bubbles */
+        .heart {
+            position: absolute;
+            color: var(--primary-color);
+            animation: floatUp 4s linear forwards;
+            z-index: 5;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Firecrackers */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: explode 0.8s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="music" loop>
+        <source src="https://www.pagalworld.com.se/files/download/id/64627" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        
+        <div class="screen active" id="s1">
+            <h1>Hey Princess</h1>
+            <p>I have a New Year surprise for you...</p>
+            <button class="btn" onclick="start()">Open Surprise ✨</button>
+        </div>
+
+        <div class="screen" id="s2">
+            <h1>Our Best Vibe</h1>
+            <div class="photo-frame">
+                <img src="https://images.unsplash.com/photo-1516589174184-c68526514b4c?q=80&w=1000&auto=format&fit=crop" alt="Us">
+            </div>
+            <p>Ready for 2026 together?</p>
+            <button class="btn" onclick="next(3)">Yes, Forever! ❤️</button>
+        </div>
+
+        <div class="screen" id="s3">
+            <h1 style="font-size: 4rem;">2026</h1>
+            <h2 style="color: var(--primary-color);">Happy New Year!</h2>
+            <p>May this year bring us closer than ever.</p>
+            <button class="btn" onclick="fireworks()">Celebrate! 🎆</button>
+        </div>
+
+    </div>
+
+    <script>
+        function start() {
+            document.getElementById('music').play();
+            next(2);
+        }
+
+        function next(num) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('s' + num).classList.add('active');
+            if(num === 3) setInterval(fireworks, 1000);
+        }
+
+        // Heart Bubbles Logic
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+        setInterval(createHeart, 400);
+
+        // Firecrackers Logic
+        function fireworks() {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            for (let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = x + 'px';
+                p.style.top = y + 'px';
+                p.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                p.style.setProperty('--x', (Math.random() - 0.5) * 300 + 'px');
+                p.style.setProperty('--y', (Math.random() - 0.5) * 300 + 'px');
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 800);
+            }
+        }
+    </script>
+</body>
+</html>
